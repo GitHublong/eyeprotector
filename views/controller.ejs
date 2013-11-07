@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title><%= title %></title>
+		<style type="text/css">
+		.controller{margin: auto;width: 200px;height: 200px;}
+		</style>
+	</head>
+	<body>
+		<h1>Socket</h1>
+		
+		<div class="controller">
+			<input type="button" value="up">
+			<input type="button" value="left">
+			<input type="button" value="right">
+			<input type="button" value="down">
+		</div>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<!--<script type="text/javascript" src="js/controller.coffee"></script>-->
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+			var socket = io.connect();
+			$up = $("input[value='up']")
+			$left = $("input[value='left']")
+			$right = $("input[value='right']")
+			$down = $("input[value='down']")
+			$('input').each(function(index){
+				$(this).click(function(event) {
+					socket.emit('select',{direction:$(this).val(),id:<%= id %>})
+				});
+			})
+			socket.on('end',function(data){
+				socket.emit('end',{end:'controller',id:<%= id %>})
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>socket</title>
+		<style type="text/css">
+		.controller{margin: auto;width: 200px;height: 200px;}
+		</style>
+	</head>
+	<body>
+		<h1>Socket</h1>
+		<p><a href="/controller">test</a></p>
+		<p></p>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<!--<script type="text/javascript" src="js/controller.coffee"></script>-->
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+			var socket = io.connect('http:127.0.0.1:3000');
+
+			socket.on('end',function(data){
+				alert(data)
+				console.log(socket);
+				socket.emit('end',{end:'screen'});
+				// socket.emit('replyEnd',{end:'screen',id:<%= id %>})
+
+			})
+
+			socket.on('judge',function(data){
+				alert(data)
+				console.log(data.direction);
+				$('p').eq(1).append("<p>"+data.direction+"</p>")
+			})
+		</script>
+	</body>
+</html>
